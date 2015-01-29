@@ -1,0 +1,6 @@
+C:\Users\HoracioFilho\Desktop\multimidia-mobile\app\build\intermediates\classes\debug
+C:\Users\HoracioFilho\Desktop\multimidia-mobile\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-99c1ccd53a7fa88549c32ac544faa9e96cd17557.jar
+C:\Users\HoracioFilho\Desktop\multimidia-mobile\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-1d75a8169e3aabc69f83b6169e6ded43a398a699.jar
+C:\Users\HoracioFilho\Desktop\multimidia-mobile\app\build\intermediates\pre-dexed\debug\classes-9ae49c63bcf6faadc25dc8e614b352f71007f05a.jar
+C:\Users\HoracioFilho\Desktop\multimidia-mobile\app\build\intermediates\pre-dexed\debug\classes-7ffad8ea45c461bb9e55a9b065aa2071be6667bb.jar
+C:\Users\HoracioFilho\Desktop\multimidia-mobile\app\build\intermediates\pre-dexed\debug\wekaSTRIPPED-befce95ad8ee6eedbee8f133fa9554d1b09347cf.jar

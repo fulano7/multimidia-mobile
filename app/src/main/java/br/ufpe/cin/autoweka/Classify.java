@@ -1,13 +1,61 @@
 package br.ufpe.cin.autoweka;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 
 import weka.attributeSelection.AttributeSelection;
 import weka.classifiers.Classifier;
 import weka.core.Instances;
+import weka.classifiers.Evaluation;
 
-public class Classify {	
-	public static String classifySingleUnlabeledInstance(MusicInstance mi, String modelObjPath, String attributeSelectionObjPath) throws Exception{
+import weka.core.converters.ConverterUtils.DataSource;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.StringReader;
+
+
+public class Classify {
+
+    public static void classifyInstances(String attributeSelectionObjPath, String modelObjPath, String instancesPath) throws Exception{
+    DataSource dataSource = new DataSource(new FileInputStream(instancesPath));
+    Instances instances = dataSource.getDataSet();
+
+    // O ultimo atributo eh o q queremos inferir
+    instances.setClassIndex(instances.numAttributes() - 1);
+
+    //Carregar a classe de selecao de atributos, se necessario
+    if(attributeSelectionObjPath != null){
+        AttributeSelection as = (AttributeSelection)weka.core.SerializationHelper.read(attributeSelectionObjPath);
+        instances = as.reduceDimensionality(instances);
+    }
+
+    //Carregar classificador
+    Classifier classifier = (Classifier)weka.core.SerializationHelper.read(modelObjPath);
+
+    //Fazer a avaliacao
+    Evaluation eval = new Evaluation(instances);
+
+    // terceiro parametro eh obrigatorio, por qneuanto nao vamos usa-lo
+    Object[] nul = new Object[0];
+
+    eval.evaluateModel(classifier, instances, nul);
+
+}
+
+
+
+
+    public static String classifySingleUnlabeledInstance(MusicInstance mi, String modelObjPath, String attributeSelectionObjPath) throws Exception{
 		Classifier classifier = (Classifier)weka.core.SerializationHelper.read(modelObjPath);
 		
 		Instances instances = new Instances(new StringReader(mi.toArffSingleInstanceFileValenceString()));
@@ -29,17 +77,15 @@ public class Classify {
 		
 		return classification;
 	}
-	
-	public static void main(String[] args){
-		try {
-			String s = classifySingleUnlabeledInstance(new MusicInstance(80.207, 0.49482558127419307, 0.031195728086989782, 0.09090272012346592, 0.33858609898708314), "trained.0.model", "trained.0.attributeselection");
-			System.out.println(s);
-			String s2 = classifySingleUnlabeledInstance(new MusicInstance(140.008, 0.436097823900063, 0.03222021207000658, 0.1057052477494161, 0.6061255397822767), "trained.0.model", "trained.0.attributeselection");
-			System.out.println(s2);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
+    //(String attributeSelectionObjPath, String modelObjPath, String instancesPath)
+	public void run(Context ctx) throws IOException {
+        String path = "file:///android_asset/ativacao.arff";
+
+        boolean exists = new File(path).exists();
+
+        System.out.print(exists);
+    }
 }
 
 class MusicInstance{
